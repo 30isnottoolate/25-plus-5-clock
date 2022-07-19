@@ -3,6 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './app_styles.css';
 
 class TwentyFivePlusFive extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      breakLength: 5,
+      sessionLength: 25,
+      breakLeft: 300,
+      sessionLeft: 1500,
+      mode: "Session",
+      active: false,
+      ping: ""
+    };
+  }
+  
   render() {
     return (
       <div id="app-container">
