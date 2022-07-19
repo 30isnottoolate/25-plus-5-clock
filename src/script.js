@@ -8,6 +8,7 @@ const DEF_B_LEFT = 300; // default Break length in seconds
 const DEF_S_LEFT = 1500; // default Session length in seconds
 const DEF_MODE = "Session"; // default mode
 const DEF_ACTIVE = false; // default activity status
+const SECS_IN_A_MIN = 60; // number of seconds in a minute
 
 class TwentyFivePlusFive extends React.Component {
   constructor(props) {
@@ -25,9 +26,14 @@ class TwentyFivePlusFive extends React.Component {
     this.alarm = React.createRef();
 
     this.resetState = this.resetState.bind(this);
+    this.convertClock = this.convertClock.bind(this);
+    this.startPauseButtonLabel = this.startPauseButtonLabel.bind(this);
   }
 
   resetState() {
+    this.alarm.current.pause();
+    this.alarm.current.currentTime = 0;
+
     this.setState({
       breakLength: DEF_B_LENGTH,
       sessionLength: DEF_S_LENGTH,
@@ -37,6 +43,31 @@ class TwentyFivePlusFive extends React.Component {
       active: DEF_ACTIVE,
       ping: ""
     });
+  }
+
+  convertClock() {
+    let minutes, seconds;
+    
+    if (this.state.mode == "Session") {
+      minutes = Math.floor(this.state.sessionLeft / SECS_IN_A_MIN);
+      seconds = this.state.sessionLeft % SECS_IN_A_MIN;
+    } else {
+      minutes = Math.floor(this.state.breakLeft / SECS_IN_A_MIN);
+      seconds = this.state.breakLeft % SECS_IN_A_MIN;
+    }
+    
+    if (minutes < 10) {minutes = "0" + minutes;}
+    if (seconds < 10) {seconds = "0" + seconds;}
+
+    return minutes + ":" + seconds;
+  }
+
+  startPauseButtonLabel() {
+    if (!this.state.active) {
+      return "START";
+    } else if (this.state.active) {
+      return "PAUSE";
+    }
   }
 
   render() {
@@ -54,9 +85,9 @@ class TwentyFivePlusFive extends React.Component {
         <button id="break-increment" className="length-button">+</button>
         <p id="break-length" className="length-counter">{this.state.breakLength}</p>
 
-        <p id="timer-label">SESSION/BREAK</p>
-        <p id="time-left">25:00</p>
-        <button id="start_stop" className="time-button">START</button>
+        <p id="timer-label">{this.state.mode}</p>
+        <p id="time-left">{this.convertClock()}</p>
+        <button id="start_stop" className="time-button">{this.startPauseButtonLabel()}</button>
         <button id="reset" className="time-button" onClick={this.resetState}>RESET</button>
         
         <audio id="alarm" preload="auto" ref={this.alarm} src="https://sampleswap.org/samples-ghost/SOUND%20EFFECTS%20and%20NOISES/Alarm%20Sounds/212[kb]oscillating-flyby.wav.mp3"/>
