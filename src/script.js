@@ -9,6 +9,8 @@ const DEF_S_LEFT = 1500; // default Session length in seconds
 const DEF_MODE = "Session"; // default mode
 const DEF_ACTIVE = false; // default activity status
 const SECS_IN_A_MIN = 60; // number of seconds in a minute
+const MIN_LENGTH = 1; // minimal length of modes
+const MAX_LENGTH = 60; // maximal length of modes
 
 class TwentyFivePlusFive extends React.Component {
   constructor(props) {
@@ -26,8 +28,20 @@ class TwentyFivePlusFive extends React.Component {
     this.alarm = React.createRef();
 
     this.resetState = this.resetState.bind(this);
+    this.decrementBreak = this.decrementBreak.bind(this);
     this.convertClock = this.convertClock.bind(this);
     this.startPauseButtonLabel = this.startPauseButtonLabel.bind(this);
+  }
+
+  decrementBreak() {
+    this.setState((prevState) => {
+      if (!prevState.active && prevState.breakLength > MIN_LENGTH ) {
+        return {
+          breakLength: prevState.breakLength - 1,
+          breakLeft: (prevState.breakLength - 1) * SECS_IN_A_MIN
+        }
+      }
+    });
   }
 
   resetState() {
@@ -81,7 +95,7 @@ class TwentyFivePlusFive extends React.Component {
         <p id="session-length" className="length-counter">{this.state.sessionLength}</p>
 
         <p id="break-label" className="length-label">Break Length</p>
-        <button id="break-decrement" className="length-button">-</button>
+        <button id="break-decrement" className="length-button" onClick={this.decrementBreak}>-</button>
         <button id="break-increment" className="length-button">+</button>
         <p id="break-length" className="length-counter">{this.state.breakLength}</p>
 
