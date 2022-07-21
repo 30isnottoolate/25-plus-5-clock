@@ -30,8 +30,25 @@ class TwentyFivePlusFive extends React.Component {
     this.resetState = this.resetState.bind(this);
     this.decrementBreak = this.decrementBreak.bind(this);
     this.incrementBreak = this.incrementBreak.bind(this);
+    this.decrementSession = this.decrementSession.bind(this);
+    this.incrementSession = this.incrementSession.bind(this);
     this.convertClock = this.convertClock.bind(this);
     this.startPauseButtonLabel = this.startPauseButtonLabel.bind(this);
+  }
+
+  resetState() {
+    this.alarm.current.pause();
+    this.alarm.current.currentTime = 0;
+
+    this.setState({
+      breakLength: DEF_B_LENGTH,
+      sessionLength: DEF_S_LENGTH,
+      breakLeft: DEF_B_LEFT,
+      sessionLeft: DEF_S_LEFT,
+      mode: DEF_MODE,
+      active: DEF_ACTIVE,
+      ping: ""
+    });
   }
 
   decrementBreak() {
@@ -56,21 +73,28 @@ class TwentyFivePlusFive extends React.Component {
     });
   }
 
-  resetState() {
-    this.alarm.current.pause();
-    this.alarm.current.currentTime = 0;
-
-    this.setState({
-      breakLength: DEF_B_LENGTH,
-      sessionLength: DEF_S_LENGTH,
-      breakLeft: DEF_B_LEFT,
-      sessionLeft: DEF_S_LEFT,
-      mode: DEF_MODE,
-      active: DEF_ACTIVE,
-      ping: ""
+  decrementSession() {
+    this.setState((prevState) => {
+      if (!prevState.active && prevState.sessionLength > MIN_LENGTH ) {
+        return {
+          sessionLength: prevState.sessionLength - 1,
+          sessionLeft: (prevState.sessionLength - 1) * SECS_IN_A_MIN
+        }
+      }
     });
   }
-
+  
+  incrementSession() {
+    this.setState((prevState) => {
+      if (!prevState.active && prevState.sessionLength < MAX_LENGTH) {
+        return {
+          sessionLength: prevState.sessionLength + 1,
+          sessionLeft: (prevState.sessionLength + 1) * SECS_IN_A_MIN
+        }
+      }
+    });
+  }
+  
   convertClock() {
     let minutes, seconds;
     
@@ -102,8 +126,8 @@ class TwentyFivePlusFive extends React.Component {
         <p id="app-name">25 + 5 CLOCK</p>
 
         <p id="session-label" className="length-label">Session Length</p>
-        <button id="session-decrement" className="length-button">-</button>
-        <button id="session-increment" className="length-button">+</button>
+        <button id="session-decrement" className="length-button" onClick={this.decrementSession}>-</button>
+        <button id="session-increment" className="length-button" onClick={this.incrementSession}>+</button>
         <p id="session-length" className="length-counter">{this.state.sessionLength}</p>
 
         <p id="break-label" className="length-label">Break Length</p>
