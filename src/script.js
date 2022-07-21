@@ -174,18 +174,18 @@ class TwentyFivePlusFive extends React.Component {
         <p id="app-name">25 + 5 CLOCK</p>
 
         <p id="session-label" className="length-label">Session Length</p>
-        <button id="session-decrement" className="length-button" onClick={this.decrementSession}>-</button>
-        <button id="session-increment" className="length-button" onClick={this.incrementSession}>+</button>
+        <button id="session-decrement" className="length-button session-button" onClick={this.decrementSession}>-</button>
+        <button id="session-increment" className="length-button session-button" onClick={this.incrementSession}>+</button>
         <p id="session-length" className="length-counter">{this.state.sessionLength}</p>
 
         <p id="break-label" className="length-label">Break Length</p>
-        <button id="break-decrement" className="length-button" onClick={this.decrementBreak}>-</button>
-        <button id="break-increment" className="length-button" onClick={this.incrementBreak}>+</button>
+        <button id="break-decrement" className="length-button break-button" onClick={this.decrementBreak}>-</button>
+        <button id="break-increment" className="length-button break-button" onClick={this.incrementBreak}>+</button>
         <p id="break-length" className="length-counter">{this.state.breakLength}</p>
 
         <p id="timer-label">{this.state.mode}</p>
         <p id="time-left">{this.convertClock()}</p>
-        <button id="start_stop" className="time-button" onClick={this.startPause}>{this.startPauseButtonLabel()}</button>
+        <button id="start-pause" className="time-button" onClick={this.startPause}>{this.startPauseButtonLabel()}</button>
         <button id="reset" className="time-button" onClick={this.resetState}>RESET</button>
         
         <audio id="alarm" preload="auto" ref={this.alarm} src="https://sampleswap.org/samples-ghost/SOUND%20EFFECTS%20and%20NOISES/Alarm%20Sounds/212[kb]oscillating-flyby.wav.mp3"/>
