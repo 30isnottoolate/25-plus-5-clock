@@ -33,22 +33,24 @@ class TwentyFivePlusFive extends React.Component {
     this.decrementSession = this.decrementSession.bind(this);
     this.incrementSession = this.incrementSession.bind(this);
     this.convertClock = this.convertClock.bind(this);
+    this.startPause = this.startPause.bind(this);
     this.startPauseButtonLabel = this.startPauseButtonLabel.bind(this);
+    this.decrementTime = this.decrementTime.bind(this);
   }
 
   resetState() {
     this.alarm.current.pause();
     this.alarm.current.currentTime = 0;
 
-    this.setState({
+    this.setState((prevState) => ({
       breakLength: DEF_B_LENGTH,
       sessionLength: DEF_S_LENGTH,
       breakLeft: DEF_B_LEFT,
       sessionLeft: DEF_S_LEFT,
       mode: DEF_MODE,
       active: DEF_ACTIVE,
-      ping: ""
-    });
+      ping: clearInterval(prevState.ping)
+    }));
   }
 
   decrementBreak() {
@@ -112,6 +114,22 @@ class TwentyFivePlusFive extends React.Component {
     return minutes + ":" + seconds;
   }
 
+  startPause() {
+    this.setState((prevState) => {
+      if (!prevState.active) {
+        return {
+          active: true,
+          ping: setInterval(this.decrementTime, 1000)
+        }
+      } else {
+        return {
+          active: false,
+          ping: clearInterval(prevState.ping)
+        }
+      }
+    });
+  }
+
   startPauseButtonLabel() {
     if (!this.state.active) {
       return "START";
@@ -128,7 +146,7 @@ class TwentyFivePlusFive extends React.Component {
             sessionLeft: prevState.sessionLeft - 1
           }
         } if (prevState.sessionLeft == 0) {
-          this.beep.current.play();
+          this.alarm.current.play();
           return {
             breakLeft: prevState.breakLength * SECS_IN_A_MIN,
             mode: "Break"
@@ -140,7 +158,7 @@ class TwentyFivePlusFive extends React.Component {
             breakLeft: prevState.breakLeft - 1
           }
         } if (prevState.breakLeft == 0) {
-          this.beep.current.play();
+          this.alarm.current.play();
           return {
             sessionLeft: prevState.sessionLength * SECS_IN_A_MIN,
             mode: "Session"
@@ -167,7 +185,7 @@ class TwentyFivePlusFive extends React.Component {
 
         <p id="timer-label">{this.state.mode}</p>
         <p id="time-left">{this.convertClock()}</p>
-        <button id="start_stop" className="time-button">{this.startPauseButtonLabel()}</button>
+        <button id="start_stop" className="time-button" onClick={this.startPause}>{this.startPauseButtonLabel()}</button>
         <button id="reset" className="time-button" onClick={this.resetState}>RESET</button>
         
         <audio id="alarm" preload="auto" ref={this.alarm} src="https://sampleswap.org/samples-ghost/SOUND%20EFFECTS%20and%20NOISES/Alarm%20Sounds/212[kb]oscillating-flyby.wav.mp3"/>
