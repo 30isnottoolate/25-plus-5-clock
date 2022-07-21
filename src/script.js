@@ -120,6 +120,36 @@ class TwentyFivePlusFive extends React.Component {
     }
   }
 
+  decrementTime() {
+    this.setState((prevState) => {
+      if (prevState.mode == "Session") {
+        if (prevState.sessionLeft > 0) {
+          return {
+            sessionLeft: prevState.sessionLeft - 1
+          }
+        } if (prevState.sessionLeft == 0) {
+          this.beep.current.play();
+          return {
+            breakLeft: prevState.breakLength * SECS_IN_A_MIN,
+            mode: "Break"
+          }
+        }
+      } else {
+        if (prevState.breakLeft > 0) {
+          return {
+            breakLeft: prevState.breakLeft - 1
+          }
+        } if (prevState.breakLeft == 0) {
+          this.beep.current.play();
+          return {
+            sessionLeft: prevState.sessionLength * SECS_IN_A_MIN,
+            mode: "Session"
+          }
+        }
+      }
+    });
+  }
+
   render() {
     return (
       <div id="app-container">
