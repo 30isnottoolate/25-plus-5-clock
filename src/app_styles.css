@@ -160,6 +160,7 @@ button {
   height: 35px;
   width: 100px;
   border-radius: 5px;
+  padding-top: 2px;
 }
 
 #start-pause {
@@ -192,4 +193,35 @@ button {
 
 #reset:active {
   background-color: #0D66AB;
+}
+
+@media screen and (max-width: 500px) {
+  #app-container {
+  grid-template-columns: repeat(3, 30px) repeat(2, 80px) repeat(3, 30px);
+  width: 340px;
+  height: 270px;
+}
+  #app-name {
+    font-size: 28px;
+  }
+  
+  .length-label {
+    font-size: 14px;
+  }
+  
+  .length-counter {
+    font-size: 20px;
+  }
+  
+  .time-button {
+    font-size: 16px;
+    height: 28px;
+    width: 70px;
+    padding-top: 1px;
+    border-radius: 4px;
+  }
+  
+  #timer-label {
+    font-size: 24px;
+  }
 }
