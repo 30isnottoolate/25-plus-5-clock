@@ -8,7 +8,7 @@
 
 * {
   box-sizing: border-box;
-  margin: 0;
+  margin: auto;
   padding: 0;
   text-align: center;
 }
@@ -29,21 +29,19 @@ body {
   justify-content: center;
   align-content: center;
   grid-template-columns: repeat(3, 45px) repeat(2, 110px) repeat(3, 45px);
-  grid-template-rows: repeat(3, 45px) 25px repeat(2, 45px);
+  grid-template-rows: repeat(6, 45px);
   width: 490px;
-  height: 250px;
+  height: 270px;
 }
 
 #app-name {
   font-size: 35px;
   grid-column: 3 / 7;
   grid-row: 1 / 2;
-  margin: auto;
 }
 
 .length-label {
   font-size: 20px;
-  margin: auto;
 }
 
 #session-label {
@@ -56,6 +54,13 @@ body {
   grid-row: 3 / 4;
 }
 
+button {
+  font-family: "Cabin";
+  color: #FFFFFF;
+  border: 1px solid #000000;
+  cursor: pointer;
+}
+
 .length-button {
   display: grid;
   align-content: center;
@@ -63,27 +68,74 @@ body {
   height: 25px;
   width: 25px;
   border-radius: 50%;
-  margin: 0 auto;
 }
 
 #session-decrement {
   grid-column: 1 / 2;
   grid-row: 4 / 5;
+  background-color: #B82601;
+  padding-bottom: 3px;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+}
+
+#session-decrement:hover {
+  background-color: #DF2E01;
+}
+
+#session-decrement:active {
+  background-color: #FE3C0B;
 }
 
 #session-increment {
   grid-column: 3 / 4;
   grid-row: 4 / 5;
+  background-color: #B82601;
+  padding-bottom: 5px;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+}
+
+#session-increment:hover {
+  background-color: #DF2E01;
+}
+
+#session-increment:active {
+  background-color: #FE3C0B;
 }
 
 #break-decrement {
   grid-column: 8 / 9;
   grid-row: 4 / 5;
+  background-color: #062F4F;
+  padding-bottom: 3px;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+}
+
+#break-decrement:hover {
+  background-color: #0A5085;
+}
+
+#break-decrement:active {
+  background-color: #0D66AB;
 }
 
 #break-increment {
   grid-column: 6 / 7;
   grid-row: 4 / 5;
+  background-color: #062F4F;
+  padding-bottom: 5px;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+}
+
+#break-increment:hover {
+  background-color: #0A5085;
+}
+
+#break-increment:active {
+  background-color: #0D66AB;
 }
 
 .length-counter {
@@ -123,17 +175,37 @@ body {
   font-size: 20px;
   height: 35px;
   width: 100px;
-  padding-top: 3px;
   border-radius: 5px;
-  margin: auto;
 }
 
 #start_stop {
   grid-column: 4 / 5;
   grid-row: 6 / 7;
+  background-color: #B82601;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+}
+
+#start_stop:hover {
+  background-color: #DF2E01;
+}
+
+#start_stop:active {
+  background-color: #FE3C0B;
 }
 
 #reset {
   grid-column: 5 / 6;
   grid-row: 6 / 7;
+  background-color: #062F4F;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+}
+
+#reset:hover {
+  background-color: #0A5085;
+}
+
+#reset:active {
+  background-color: #0D66AB;
 }
