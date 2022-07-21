@@ -29,6 +29,7 @@ class TwentyFivePlusFive extends React.Component {
 
     this.resetState = this.resetState.bind(this);
     this.decrementBreak = this.decrementBreak.bind(this);
+    this.incrementBreak = this.incrementBreak.bind(this);
     this.convertClock = this.convertClock.bind(this);
     this.startPauseButtonLabel = this.startPauseButtonLabel.bind(this);
   }
@@ -39,6 +40,17 @@ class TwentyFivePlusFive extends React.Component {
         return {
           breakLength: prevState.breakLength - 1,
           breakLeft: (prevState.breakLength - 1) * SECS_IN_A_MIN
+        }
+      }
+    });
+  }
+
+  incrementBreak() {
+    this.setState((prevState) => {
+      if (!prevState.active && prevState.breakLength < MAX_LENGTH) {
+        return {
+          breakLength: prevState.breakLength + 1,
+          breakLeft: (prevState.breakLength + 1) * SECS_IN_A_MIN
         }
       }
     });
@@ -96,7 +108,7 @@ class TwentyFivePlusFive extends React.Component {
 
         <p id="break-label" className="length-label">Break Length</p>
         <button id="break-decrement" className="length-button" onClick={this.decrementBreak}>-</button>
-        <button id="break-increment" className="length-button">+</button>
+        <button id="break-increment" className="length-button" onClick={this.incrementBreak}>+</button>
         <p id="break-length" className="length-counter">{this.state.breakLength}</p>
 
         <p id="timer-label">{this.state.mode}</p>
