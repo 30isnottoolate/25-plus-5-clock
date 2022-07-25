@@ -99,7 +99,7 @@ class TwentyFivePlusFive extends React.Component {
   convertClock() {
     let minutes, seconds;
     
-    if (this.state.mode == "Session") {
+    if (this.state.mode === "Session") {
       minutes = Math.floor(this.state.sessionLeft / SECS_IN_A_MIN);
       seconds = this.state.sessionLeft % SECS_IN_A_MIN;
     } else {
@@ -139,12 +139,12 @@ class TwentyFivePlusFive extends React.Component {
 
   decrementTime() {
     this.setState((prevState) => {
-      if (prevState.mode == "Session") {
+      if (prevState.mode === "Session") {
         if (prevState.sessionLeft > 0) {
           return {
             sessionLeft: prevState.sessionLeft - 1
           }
-        } if (prevState.sessionLeft == 0) {
+        } if (prevState.sessionLeft === 0) {
           this.alarm.current.play();
           return {
             breakLeft: prevState.breakLength * SECS_IN_A_MIN,
@@ -156,7 +156,7 @@ class TwentyFivePlusFive extends React.Component {
           return {
             breakLeft: prevState.breakLeft - 1
           }
-        } if (prevState.breakLeft == 0) {
+        } if (prevState.breakLeft === 0) {
           this.alarm.current.play();
           return {
             sessionLeft: prevState.sessionLength * SECS_IN_A_MIN,
