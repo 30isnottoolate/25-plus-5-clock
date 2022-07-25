@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './app_styles.css';
+import './TwentyFivePlusFive.css';
 
 const DEF_B_LENGTH = 5; // default Break Length in minutes
 const DEF_S_LENGTH = 25; // default Session Length in minutes
@@ -194,5 +193,4 @@ class TwentyFivePlusFive extends React.Component {
   }
 }
 
-const container = ReactDOM.createRoot(document.getElementById('app-container'));
-container.render(<TwentyFivePlusFive/>);
+export default TwentyFivePlusFive;
